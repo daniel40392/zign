@@ -38,6 +38,16 @@ Usage
 
 See the `STUPS documentation on zign`_ for details.
 
+Open ID Connect
+=====
+
+To generate an open id connect compliant code you can use the following command for help:
+
+    $ zign oidc -h
+
+You may specify the token name, authorize-url, token-url, client-id and business-partner-id.
+By default the wolves identity broker is used as the authorization url for OIDC purposes (using Dex).
+
 Running Unit Tests
 ==================
 

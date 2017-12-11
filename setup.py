@@ -53,9 +53,9 @@ CLASSIFIERS = [
 CONSOLE_SCRIPTS = [
     # TODO: deprecate "zign"
     'ztoken = zign.cli:main',
-    'zign = zign.cli_zign:main'
+    'zign = zign.cli_zign:main',
+    'zign-oidc = zign.oidc_cli:main'
 ]
-
 
 class PyTest(TestCommand):
 
