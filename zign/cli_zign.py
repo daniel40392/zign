@@ -3,10 +3,10 @@ import stups_cli.config
 from clickclick import AliasedGroup
 from zign import cli
 
-from .api import get_token
+from .api import get_token, get_tokens, AuthenticationFailed
 from .cli import output_option, print_version
 
-from .oidc_api import get_token_implicit_flow, get_tokens, AuthenticationFailed
+from .oidc_api import get_token_implicit_flow
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
@@ -53,9 +53,9 @@ def token(obj, scope, url, realm, name, user, password, insecure, refresh):
     access_token = get_token(name, scope)
     print(access_token)
 
-# FCP specific zign token for generating OIDC token
+# specific command for generating OIDC token
 @cli_zign.command('oidc')
-@click.option('-n', '--name', help='Custom token name (will be stored)', metavar='TOKEN_NAME', default='fcp_app_token')
+@click.option('-n', '--name', help='Custom token name (will be stored)', metavar='TOKEN_NAME', default='oidc')
 @click.option('-a', '--authorize-url', help='OAuth 2 Authorization Endpoint URL to generate access token',
               metavar='AUTH_URL', default='https://identity.wolves.zalan.do/auth')
 @click.option('-t', '--token-url', help='OAuth 2 Token URL to generate access token using a refresh token',
@@ -64,7 +64,7 @@ def token(obj, scope, url, realm, name, user, password, insecure, refresh):
 @click.option('-p', '--business-partner-id', help='Business Partner ID to use', metavar='PARTNER_ID')
 @click.option('-r', '--refresh', help='Force refresh of the access token', is_flag=True, default=False)
 
-def fcptoken(name, authorize_url, token_url, client_id, business_partner_id, refresh):
+def oidctoken(name, authorize_url, token_url, client_id, business_partner_id, refresh):
     '''Create a new Platform IAM token or use an existing one.'''
     try:
         token = get_token_implicit_flow(name, authorize_url=authorize_url, token_url=token_url, client_id=client_id,
